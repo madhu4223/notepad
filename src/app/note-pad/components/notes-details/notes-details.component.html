@@ -3,6 +3,6 @@
     <div class="header">
         <button type="button" class="btn btn-danger btn-delete pull-right" (click)="deleteNote()">Delete</button>
     </div>
-    <div contenteditable="true" class="border border-primary note-body"  [(ngModel)]="selectedNote.note" (blur)="validateNote()"  ngDefaultControl (keyup)="onTextEnter()" [disabled]="false" #ctrl="ngModel"></div>
+    <div contenteditable="true" #content class="border border-primary note-body"  [(ngModel)]="selectedNote.note" (blur)="validateNote()"  ngDefaultControl (keyup)="onTextEnter()" [disabled]="false" #ctrl="ngModel"></div>
     <!-- <div contenteditable="true" class="new-note" *ngIf="!selectedNote.note.length" [(ngModel)]="newNote" (keyup)="onTextEnter()"  ngDefaultControl [disabled]="false" #ctrl="ngModel"></div> -->
 </div>

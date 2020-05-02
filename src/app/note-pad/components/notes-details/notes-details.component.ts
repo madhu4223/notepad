@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { NoteModel } from '../../utils/services/note-model';
 import { NotesSubjectService } from '../../utils/services/notes-subject.service';
 import { Subscription, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { FakeDbService } from '../../utils/fakeDb/fake-db.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class NotesDetailsComponent implements OnInit {
 
   constructor(
     private notesSubjectService: NotesSubjectService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private fakeDbService: FakeDbService
   ) { }
   selectedNote: NoteModel
   noteActionSubscription: Subscription
@@ -34,6 +36,7 @@ export class NotesDetailsComponent implements OnInit {
     this.onkeyUpTrigeered.pipe(debounceTime(550)).subscribe(()=>{
       // this.selectedNote.note = this.newNote
       this.notesData[this.selectedNoteIndex] = this.selectedNote;
+      this.fakeDbService.notes = _.cloneDeep(this.notesData)
       this.notesSubjectService.updateNotes.next(this.notesData)
     })
   }
@@ -42,6 +45,9 @@ export class NotesDetailsComponent implements OnInit {
     this.selectedNoteIndex = _.findIndex(this.notesData, note => note.selected)
     if(this.selectedNoteIndex > -1){
       this.selectedNote = _.cloneDeep(this.notesData[this.selectedNoteIndex])
+      let cuurentTime = new Date()
+      this.selectedNote['updatedTime'] = cuurentTime
+      // console.log('--', this.selectedNote)
     }
     this.detectChanges()
   }
@@ -63,7 +69,12 @@ export class NotesDetailsComponent implements OnInit {
   }
   deleteNote(){
     this. notesData = _.reject(this.notesData, note => note.id == this.selectedNote.id)
-      if(_.size(this.notesData) )this.notesData[0].selected = true
+      if(_.size(this.notesData) ){
+        this.notesData[0].selected = true
+      }else{
+        this.selectedNote = { id: '', note: '', selected: false, updatedTime: new Date()}
+      }
+      this.fakeDbService.notes = _.cloneDeep(this.notesData)
       this.notesSubjectService.updateNotes.next(this.notesData)
     }
   ngOnDestroy(){

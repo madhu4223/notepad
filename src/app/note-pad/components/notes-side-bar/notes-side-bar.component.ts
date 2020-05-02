@@ -4,6 +4,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { NotePadService } from '../../utils/services/note-pad.service';
 import { NotesSubjectService } from '../../utils/services/notes-subject.service';
+import { FakeDbService } from '../../utils/fakeDb/fake-db.service';
 
 @Component({
   selector: 'app-notes-side-bar',
@@ -16,6 +17,7 @@ export class NotesSideBarComponent implements OnInit {
   constructor(
     private notePadService: NotePadService,
     private notesSubjectService: NotesSubjectService,
+    private fakeDbService: FakeDbService
   ) { }
   sidebarClosed: boolean;
   keyword: string
@@ -45,9 +47,10 @@ export class NotesSideBarComponent implements OnInit {
   }
   searchNotes(){
    this.notesData =  _.cloneDeep(this.notePadService.searchNotes(this.keyword))
+   console.log('notes ', this.notesData)
    if(_.size(this.notesData)){
-    this.notesData[0].selected = true;
-    this.notesSubjectService.updateNotes.next(this.notesData)
+     this.selectNote(this.notesData[0])
+    // this.notesSubjectService.updateNotes.next(this.notesData)
    }
   }
   selectNote(noteObject){
@@ -57,6 +60,7 @@ export class NotesSideBarComponent implements OnInit {
         if(noteObject.id == note.id) note.selected = true // selecting the note
         return note;
       })
+      // this.fakeDbService.notes = _.cloneDeep(this.notesData)
       this.notesSubjectService.updateNotes.next(this.notesData)
     }
   }
@@ -65,7 +69,7 @@ export class NotesSideBarComponent implements OnInit {
       note: '',
       id: this.generateRandom(4),
       selected: false,
-      header: ''
+      updatedTime: new Date()
     }
     // console.log('new note ', emptyNote)
     this.notesData.push(emptyNote)

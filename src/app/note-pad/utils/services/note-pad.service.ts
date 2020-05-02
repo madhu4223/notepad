@@ -10,13 +10,6 @@ export class NotePadService {
   constructor(
     private fakeDb: FakeDbService
   ) { }
-
-  addNote(noteObject: NoteModel){
-    this.fakeDb.notes.push(noteObject)
-  }
-  removeNoteById(id){
-
-  }
   getNotes(){
     return this.fakeDb.notes;
   }

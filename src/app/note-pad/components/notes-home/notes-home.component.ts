@@ -18,12 +18,7 @@ export class NotesHomeComponent implements OnInit {
   sideBarClosed: boolean;
 
   ngOnInit(): void {
-    let note: NoteModel = {
-      id: '34',
-      note:'sample note',
-      selected: false
-    }
-    this.notePadService.addNote(note)
+    
     this.noteDetails = this.notePadService.getNotes()
     if(_.size(this.noteDetails)){
       this.noteDetails[0].selected = true
