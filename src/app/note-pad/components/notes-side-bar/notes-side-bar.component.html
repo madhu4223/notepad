@@ -1,0 +1,49 @@
+<div [ngClass]="sidebarClosed ? 'page-wrapper chiller-theme' : 'page-wrapper chiller-theme toggled' ">
+    <a id="show-sidebar" class="btn btn-sm btn-dark" (click) = "toggleSidebar('OPEN')">
+        <i class="fa fa-bars"></i>
+    </a>
+    <nav id="sidebar" class="sidebar-wrapper">
+        <div class="sidebar-content">
+            <div class="sidebar-brand">
+                <a href="#">Note Pad</a>
+                <div id="close-sidebar" (click) = "toggleSidebar('CLOSE')">
+                    <i class="fa fa-times"></i>
+                </div>
+            </div>
+
+            <!-- sidebar-header  -->
+            <div class="sidebar-search">
+                <div>
+                    <div class="input-group">
+                        <input type="text" class="form-control search-menu" (keyup)="onKeyupTriggered()" [(ngModel)]="keyword" placeholder="Search...">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- sidebar-search  -->
+            <div class="sidebar-menu">
+                <ul>
+                    <li class="" *ngFor="let noteObject of notesData">
+                        <a>
+                            <i *ngIf="!noteObject.selected" class="fa fa-sticky-note-o" aria-hidden="true"></i>
+                            <i *ngIf="noteObject.selected" class="fa fa-sticky-note" aria-hidden="true"></i>
+                            <span class="pointer" [ngClass]="noteObject.selected ? 'color-white' : ''" (click)="selectNote(noteObject)">{{noteObject.note.length > 15 ? (noteObject.note | slice:0:15 )+ '...' : noteObject.note}}</span>
+                            <!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                            <span class="pointer" (click)="addNote()">Add Note</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidebar-menu  -->
+        </div>
+    </nav>
+</div>
