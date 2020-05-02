@@ -28,7 +28,7 @@ export class NotesHomeComponent implements OnInit {
     if(_.size(this.noteDetails)){
       this.noteDetails[0].selected = true
     }
-    console.log('notes ',this.noteDetails)
+    // console.log('notes ',this.noteDetails)
     this.notesSubjectService.sideBar.subscribe((sideBarClosed) => {
         this.sideBarClosed = sideBarClosed;
     })

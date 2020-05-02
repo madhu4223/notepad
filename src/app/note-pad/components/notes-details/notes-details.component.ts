@@ -58,7 +58,7 @@ export class NotesDetailsComponent implements OnInit {
     }
   }
   onTextEnter(){
-    console.log('selected ', this.selectedNote)
+    // console.log('selected ', this.selectedNote)
     this.onkeyUpTrigeered.next()
   }
   deleteNote(){

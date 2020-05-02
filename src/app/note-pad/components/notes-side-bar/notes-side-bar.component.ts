@@ -23,7 +23,7 @@ export class NotesSideBarComponent implements OnInit {
   noteActionSubscription: Subscription
 
   ngOnInit(): void {
-    console.log('sideber ', this.notesData)
+    // console.log('sideber ', this.notesData)
     this.onkeyUpTrigeered.pipe(debounceTime(550)).subscribe(()=>{
       // search notes
       this.searchNotes()
@@ -31,7 +31,7 @@ export class NotesSideBarComponent implements OnInit {
 
     this.noteActionSubscription = this.notesSubjectService.updateNotes.subscribe((notesData: NoteModel[])=>{
       // Handle all the actions by action type
-      console.log('text edited ', notesData)
+      // console.log('text edited ', notesData)
       this.notesData = notesData
     })
   }
@@ -40,7 +40,7 @@ export class NotesSideBarComponent implements OnInit {
       this.notesSubjectService.sideBar.next(this.sidebarClosed);
   }
   onKeyupTriggered(){
-    console.log('keyword = ', this.keyword)
+    // console.log('keyword = ', this.keyword)
     this.onkeyUpTrigeered.next()
   }
   searchNotes(){
@@ -67,7 +67,7 @@ export class NotesSideBarComponent implements OnInit {
       selected: false,
       header: ''
     }
-    console.log('new note ', emptyNote)
+    // console.log('new note ', emptyNote)
     this.notesData.push(emptyNote)
     this.selectNote(emptyNote)
   }
