@@ -15,7 +15,7 @@ import { FakeDbService } from '../../utils/fakeDb/fake-db.service';
 export class NotesDetailsComponent implements OnInit {
 
   @Input()notesData: NoteModel[]
-
+  @ViewChild('content') contentElement: ElementRef
   constructor(
     private notesSubjectService: NotesSubjectService,
     private cdr: ChangeDetectorRef,
@@ -41,12 +41,23 @@ export class NotesDetailsComponent implements OnInit {
     })
   }
 
+  ngAfterViewInit(){
+    this.focusConentDiv()
+  }
+
+  focusConentDiv(){
+    if(this.contentElement && this.contentElement.nativeElement){
+      this.contentElement.nativeElement.focus()
+    }
+  }
+
  updateSelectedNote(){
     this.selectedNoteIndex = _.findIndex(this.notesData, note => note.selected)
     if(this.selectedNoteIndex > -1){
       this.selectedNote = _.cloneDeep(this.notesData[this.selectedNoteIndex])
       let cuurentTime = new Date()
       this.selectedNote['updatedTime'] = cuurentTime
+      this.focusConentDiv()
       // console.log('--', this.selectedNote)
     }
     this.detectChanges()
