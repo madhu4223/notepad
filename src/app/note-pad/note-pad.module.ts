@@ -10,7 +10,6 @@ import { ContentEditableFormDirective } from './directives/content-editable-form
 
 const routes: Routes = [
   { path: '', component: NotesHomeComponent },
-  { path: ':Id', component: NotesDetailsComponent }
 ]
 @NgModule({
   declarations: [NotesHomeComponent, NotesSideBarComponent, NotesDetailsComponent, ContentEditableFormDirective],
